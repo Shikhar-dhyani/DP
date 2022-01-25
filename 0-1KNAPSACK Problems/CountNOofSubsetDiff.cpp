@@ -1,56 +1,38 @@
-
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define INF 1e18
-#define FIO                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0);                       \
-    cout.tie(0);
-#define pb push_back
-// right top left bottom
-ll dx[4] = {0, -1, 0, 1};
-ll dy[4] = {1, 0, -1, 0};
-int diff;
-int subset(int a[], int n, int sum, int tempSum)
+
+int countsubsetsum(int arr[], int sum, int n)
 {
-
-    int tab[n+1][sum+1] ;
-    
-
-    if (n < 0)
-        return 0;
-
-    int t = (sum - 2 * tempSum);
-    if (t == diff)
-        return 1;
-    if (t < 0)
-        return 0;
-
-    return subset(a, n - 1, sum, tempSum + a[n - 1]) + subset(a, n - 1, sum, tempSum);
-}
-
-void solve()
-{
-    int n;
-    cin >> n;
-    int a[n];
-    int sum = 0;
-    for (int i = 0; i < n; i++)
-        cin >> a[i], sum += a[i];
-    cin >> diff;
-    int tempSum = 0;
-    cout << subset(a, n, sum, tempSum) << endl;
+    int t[n+1][sum+1];
+    for (int i = 0; i < n + 1; i++)
+        for (int j = 0; j < sum + 1; j++)
+        {
+            if (i == 0)
+                t[i][j] = 0;
+            if (j == 0)
+                t[i][j] = 1;
+        }
+    for (int i = 1; i < n + 1; i++)
+        for (int j = 1; j < sum + 1; j++)
+        {
+            if (arr[i - 1] <= j)
+                t[i][j] = t[i - 1][j -arr[i - 1]]+t[i - 1][j];
+            else
+                t[i][j] = t[i - 1][j];
+        }
+    return t[n][sum];
 }
 
 int main()
 {
-    FIO;
-    ll test = 1;
-    // cin >> test;
 
-    while (test--)
-    {
-        solve();
-    }
+    int arr[] = {0,1,2,10,9,8};
+    int diff = 8;
+    int sum=0;
+    
+    int n = sizeof(arr) / sizeof(arr[0]);
+    for(int i=0;i<n;i++)
+    sum+=arr[i];
+    cout << countsubsetsum(arr, sum, n);
+    return 0;
 }
