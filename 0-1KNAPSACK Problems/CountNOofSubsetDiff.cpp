@@ -33,6 +33,7 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]);
     for(int i=0;i<n;i++)
     sum+=arr[i];
+    sum=(diff+sum)/2;
     cout << countsubsetsum(arr, sum, n);
     return 0;
 }
