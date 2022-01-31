@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+//dp
 class Solution{
 public:
     int knapSack(int N, int W, int val[], int wt[])
